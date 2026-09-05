@@ -12,12 +12,13 @@ NTSB aviation accident data from [data.ntsb.gov/avdata](https://data.ntsb.gov/av
 
 | Table | Rows | Grain |
 |---|---|---|
-| `events` | 29,423 | one per accident |
+| `events` | 29,423 | one per event |
 | `aircraft` | 29,912 | one per aircraft (486 events involve 2+) |
 | `findings` | 69,082 | many per aircraft |
 | `engines` | 26,942 | one per engine |
 | `injury` | 166,562 | person category × severity |
 | `flight_time` | 383,068 | crew member × hour type × craft type |
+
 The population is **accidents and incidents** — 27,310 accidents (death, serious injury, or substantial damage) and 2,113 incidents (safety-significant but below that threshold). Both are included throughout unless noted.
 
 This is a genuinely relational source — `events` → `aircraft` → four child tables, keyed on `(ev_id, aircraft_key)`. Getting the joins right is most of the work.
@@ -45,7 +46,7 @@ It isn't that simple. The modifier `Incorrect service/maintenance` appears **969
 
 An analyst who searches the obvious category finds 375 findings. The real population is four times that.
 
-### 2. Maintenance-related accidents: 3.4% to 6.6%
+### 2. Maintenance-related events: 3.4% to 6.6%
 
 Counting distinct events rather than findings, against the 23,184 events that have any coded findings:
 
@@ -56,7 +57,7 @@ Counting distinct events rather than findings, against the 23,184 events that ha
 
 Reported as a range because the difference is a real definitional choice, not noise. The narrow figure also excludes the 25,556 findings (37%) where `cause_factor` is NULL — recorded in the sequence but designated neither cause nor factor.
 
-### Maintenance findings are four times more common in incidents than accidents
+### 3. Maintenance findings are four times more common in incidents than accidents
 
 | Event type | With findings | Maintenance-related | Share |
 |---|---|---|---|
@@ -67,7 +68,7 @@ This is consistent with how mechanical failures present. A rough-running engine 
 
 Two limits on reading too much into it. The incident sample is small (506 events with coded findings), and the NTSB investigates only a fraction of reported incidents. That selection likely favors mechanical events in the first place, since a component failure gets reported where a hard landing does not. Some of the 20% is real; some is selection.
 
-### 3. Stricter maintenance rules, higher maintenance findings
+### 4. Stricter maintenance rules, higher maintenance findings
 
 Maintenance-related share by operating rule, 2008–2023, aircraft with coded findings:
 
@@ -84,7 +85,7 @@ This almost certainly measures **detection, not occurrence**:
 
 - **Investigation depth scales with the operating rule.** A Part 121 accident draws a full NTSB go-team, subpoenaed maintenance records, and an audit of the operator's program. A Part 91 accident typically gets one investigator and a records review. Maintenance causation is found where someone looks for it.
 - **Records exist to be examined.** Part 121 maintenance records are detailed and auditable. Part 91 records are frequently incomplete, so a maintenance cause often cannot be substantiated even where it exists.
-- **Accident mix differs.** Part 91 accidents skew heavily toward pilot causes — fuel exhaustion, VFR into IMC, loss of control — which dilutes the maintenance share without maintenance being any less common in absolute terms.
+- **Event mix differs.** Part 91 accidents skew heavily toward pilot causes — fuel exhaustion, VFR into IMC, loss of control — which dilutes the maintenance share without maintenance being any less common in absolute terms.
 
 Groups below ~100 aircraft (091K, 133, 129, and others) are excluded from interpretation; the denominators are too small for the percentages to be stable.
 
@@ -94,7 +95,7 @@ Groups below ~100 aircraft (091K, 133, 129, and others) are excluded from interp
 
 **These numbers describe NTSB coding, not aviation.** Every figure here is a floor. A maintenance cause that was never identified, never substantiated, or never coded does not appear in the data at all.
 
-**The denominator is unstable across years.** Events with no coded findings rose from ~200/year in 2008–2014 to 531 in 2023, while total accidents *fell*. 2024 (822) and 2025 (811) are dominated by open investigations. All time-based analysis excludes 2024–2025; trend claims across the full period are not supportable without also reporting coded share.
+**The denominator is unstable across years.** Events with no coded findings rose from ~200/year in 2008–2014 to 531 in 2023, while total events *fell*. 2024 (822) and 2025 (811) are dominated by open investigations. All time-based analysis excludes 2024–2025; trend claims across the full period are not supportable without also reporting coded share.
 
 **`acft_make` is free text** — 4,413 distinct spellings across 29,912 rows, including 19 variants of Cessna. Any ranking by manufacturer requires normalization first, and manufacturer counts track fleet size rather than reliability regardless.
 
