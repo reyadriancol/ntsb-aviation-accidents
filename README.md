@@ -18,6 +18,7 @@ NTSB aviation accident data from [data.ntsb.gov/avdata](https://data.ntsb.gov/av
 | `engines` | 26,942 | one per engine |
 | `injury` | 166,562 | person category × severity |
 | `flight_time` | 383,068 | crew member × hour type × craft type |
+The population is **accidents and incidents** — 27,310 accidents (death, serious injury, or substantial damage) and 2,113 incidents (safety-significant but below that threshold). Both are included throughout unless noted.
 
 This is a genuinely relational source — `events` → `aircraft` → four child tables, keyed on `(ev_id, aircraft_key)`. Getting the joins right is most of the work.
 
@@ -54,6 +55,17 @@ Counting distinct events rather than findings, against the 23,184 events that ha
 | NTSB-designated **cause** only (`cause_factor = 'C'`) | 795 | 3.4% |
 
 Reported as a range because the difference is a real definitional choice, not noise. The narrow figure also excludes the 25,556 findings (37%) where `cause_factor` is NULL — recorded in the sequence but designated neither cause nor factor.
+
+### Maintenance findings are four times more common in incidents than accidents
+
+| Event type | With findings | Maintenance-related | Share |
+|---|---|---|---|
+| Accident | 22,678 | 1,215 | 5.4% |
+| Incident | 506 | 101 | **20.0%** |
+
+This is consistent with how mechanical failures present. A rough-running engine or an unsafe gear indication gives the crew warning and options; the event often ends as a diversion or precautionary landing rather than a crash. Pilot-cause events — stall on base, VFR into IMC, fuel exhaustion — offer less warning and end worse.
+
+Two limits on reading too much into it. The incident sample is small (506 events with coded findings), and the NTSB investigates only a fraction of reported incidents. That selection likely favors mechanical events in the first place, since a component failure gets reported where a hard landing does not. Some of the 20% is real; some is selection.
 
 ### 3. Stricter maintenance rules, higher maintenance findings
 
