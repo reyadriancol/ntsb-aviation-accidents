@@ -141,4 +141,17 @@ WHERE NOT EXISTS (
 )
 GROUP BY 1
 ORDER BY 1;
+
+-- Q: Do accidents and incidents differ in maintenance share?
+-- A: Yes, substantially. ACC 1,215/22,678 = 5.4%; INC 101/506 = 20.0%.
+--    Maintenance-caused failures skew toward survivable outcomes.
+SELECT e.ev_type,
+       COUNT(DISTINCT f.ev_id) AS events_with_findings,
+       COUNT(DISTINCT f.ev_id) FILTER (
+           WHERE f.finding_description ILIKE '%service/maintenance%'
+              OR f.finding_description ILIKE '%maintenance personnel%'
+       ) AS maint_events
+FROM findings f
+JOIN events e ON e.ev_id = f.ev_id
+GROUP BY e.ev_type;
 -- =============================================================================
