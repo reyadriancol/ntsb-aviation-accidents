@@ -1,0 +1,7 @@
+data/ 
+*.xlsx 
+*.mdb 
+*.zip 
+anaconda_projects/ 
+.ipynb_checkpoints/ 
+__pycache__/ 
