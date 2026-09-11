@@ -83,7 +83,6 @@ Part 121 operates under the most demanding maintenance regime in civil aviation 
 
 This almost certainly measures **detection, not occurrence**:
 
-- **Investigation depth scales with the operating rule.** A Part 121 accident draws a full NTSB go-team, subpoenaed maintenance records, and an audit of the operator's program. A Part 91 accident typically gets one investigator and a records review. Maintenance causation is found where someone looks for it.
 - **Records exist to be examined.** Part 121 maintenance records are detailed and auditable. Part 91 records are frequently incomplete, so a maintenance cause often cannot be substantiated even where it exists.
 - **Event mix differs.** Part 91 accidents skew heavily toward pilot causes — fuel exhaustion, VFR into IMC, loss of control — which dilutes the maintenance share without maintenance being any less common in absolute terms.
 
