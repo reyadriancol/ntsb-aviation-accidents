@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 """
 01_load_raw.py — load NTSB eADMS Excel exports into PostgreSQL as text staging tables.
  
@@ -19,16 +16,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 from pathlib import Path
 
-
-# In[4]:
-
-
 DATA = Path(r"C:\Users\racol\OneDrive\Documents\GitHub\ntsb-aviation-acidents\data")
 engine = create_engine("postgresql+psycopg2://postgres@localhost:5432/ntsb")
-
-
-# In[5]:
-
 
 files = {
     "events_raw":          "events.xlsx",
@@ -48,20 +37,6 @@ for table, fname in files.items():
               chunksize=5000, method="multi")
     print(f"{table}: {len(df):,} rows")
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
